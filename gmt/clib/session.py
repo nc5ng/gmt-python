@@ -214,10 +214,10 @@ class Session:
 
         """
         c_get_enum = self.get_libgmt_func(
-            "GMT_Get_Enum", argtypes=[ctp.c_char_p], restype=ctp.c_int
+            "GMT_Get_Enum", argtypes=[ctp.c_void_p, ctp.c_char_p], restype=ctp.c_int
         )
 
-        value = c_get_enum(name.encode())
+        value = c_get_enum(None, name.encode())
 
         if value is None or value == -99999:
             raise GMTCLibError("Constant '{}' doesn't exits in libgmt.".format(name))
