@@ -125,6 +125,24 @@ class BasePlotting:
         with Session() as lib:
             lib.call_module("coast", build_arg_string(kwargs))
 
+
+
+    def grdcontour(self, grid, **kwargs):
+        kwargs = self._preprocess(**kwargs)
+        kind = data_kind(grid, None, None)
+        with Session() as lib:
+            if kind == "file":
+                file_context = dummy_context(grid)
+            elif kind == "grid":
+                file_context = lib.virtualfile_from_grid(grid)
+            else:
+                raise GMTInvalidInput("Unrecognized data type: {}".format(type(grid)))
+            with file_context as fname:
+                arg_str = " ".join([fname, build_arg_string(kwargs)])
+                lib.call_module("grdcontour", arg_str)
+        
+
+            
     @fmt_docstring
     @use_alias(R="region", J="projection", B="frame", I="shading", C="cmap")
     @kwargs_to_strings(R="sequence")
