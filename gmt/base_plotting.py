@@ -126,8 +126,34 @@ class BasePlotting:
             lib.call_module("coast", build_arg_string(kwargs))
 
 
-
+    @fmt_docstring
+    @use_alias(
+        R="region",
+        J="projection",
+        A="annot_int",
+        C="cont_int",
+        B="frame",
+        G="labels",
+        L="limit",
+        N="fill",
+        W="pen",
+    )
     def grdcontour(self, grid, **kwargs):
+        """
+        Convert grids or images to contours and plot them on maps
+
+        Takes a grid file name or an xarray.DataArray object as input.
+
+        {gmt_module_docs}
+
+        {aliases}
+
+        Parameters
+        ----------
+        grid : str or xarray.DataArray
+            The file name of the input grid or the grid loaded as a DataArray.
+
+        """
         kwargs = self._preprocess(**kwargs)
         kind = data_kind(grid, None, None)
         with Session() as lib:
