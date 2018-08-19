@@ -130,14 +130,14 @@ class BasePlotting:
     @use_alias(
         R="region",
         J="projection",
-        A="annot_int",
-        C="cont_int",
+        A="annotation_interval",
+        C="contour_interval",
         B="frame",
-        G="labels",
+        G="label_placement",
         L="limit",
-        N="fill",
         W="pen",
     )
+    @kwargs_to_strings(R="sequence")
     def grdcontour(self, grid, **kwargs):
         """
         Convert grids or images to contours and plot them on maps
@@ -166,11 +166,10 @@ class BasePlotting:
             with file_context as fname:
                 arg_str = " ".join([fname, build_arg_string(kwargs)])
                 lib.call_module("grdcontour", arg_str)
-        
 
-            
+
     @fmt_docstring
-    @use_alias(R="region", J="projection", B="frame", I="shading", C="cmap")
+    @use_alias(R="region", J="projection", W="pen", B="frame", I="shading", C="cmap")
     @kwargs_to_strings(R="sequence")
     def grdimage(self, grid, **kwargs):
         """
